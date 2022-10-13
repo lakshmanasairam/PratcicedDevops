@@ -1,0 +1,25 @@
+- name: Install pre-req softwares
+  command: amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
+- name: install apache
+  yum:
+    name: httpd
+    state: latest
+- name: enabled an apache
+  systemd:
+    name: httpd
+    enabled: yes
+- name: download and place wordpress application
+  uri:
+    url: https://wordpress.org/latest.tar.gz
+    dest: /var/www/html
+    force_basic_auth: yes
+    owner: apache
+    group: apache
+  notify: restart apache
+- name: Configure wp-config.php ifle
+  copy:
+    src: /root/ansible/roles/app/templates/wp-config.php
+    dest: /var/www/html/wp-config.php
+    owner: apache
+    group: apache
+  notify: restart apache

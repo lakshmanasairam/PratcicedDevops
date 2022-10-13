@@ -1,0 +1,6 @@
+---
+- name : working with playbooks
+  hosts: all
+  tasks:
+    - name: collecting server ipaddress
+      command: hostname -I

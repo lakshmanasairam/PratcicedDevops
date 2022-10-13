@@ -1,0 +1,18 @@
+---
+# playscope_variables
+- name: my playbook details
+  hosts: all
+  vars:
+    var1: 100
+    subject: "devops"
+  vars_files:
+    - myvariables.yml
+  tasks:
+    - name: consuming variables
+      command: echo "var1 value is {{ var1 }}, subject is {{ subject }}"
+
+    - name: consuming variables from variables file 
+      command: echo "bactno is {{ batchno  }}, training is {{ training  }}"
+
+    - name: using and method
+      command: echo "batchno value is {{ batchno  }} && mode of training is {{ training }}"

@@ -1,0 +1,4 @@
+- name: installing db server using roles
+  hosts: all
+  roles:
+    - wordpress

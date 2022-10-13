@@ -1,0 +1,39 @@
+---
+- name: Installing an apache in most effictive way
+  hosts: all
+  tasks:
+    - name: collecting server public ipaddress
+      uri:
+        url: http://169.254.169.254/latest/meta-data/public-ipv4
+        return_content: yes
+      register: myoutput
+
+    - set_fact: pub_ip="{{ myoutput.content }}"
+
+    - name: Installing appache in server
+      yum:
+        name: httpd
+        state: latest
+    - name: Enabling httpd
+      systemd:
+        name: httpd
+        enabled: yes
+    - name: copy index.html file
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: apache
+        group: apache
+        mode: '0655'
+      notify: restaring an apache
+    - name: Replace the content in a file
+      replace:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^ServerName www.example.com'
+        replace: 'ServerName {{ pub_ip}}'  
+      notify: restaring an apache
+  handlers:
+    - name: restaring an apache
+      service:
+        name: httpd
+        state: restarted

@@ -1,0 +1,5 @@
+    - name: restaring an apache
+      systemd:
+        state: restarted
+        name: httpd
+
