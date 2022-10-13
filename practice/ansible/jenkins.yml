@@ -1,0 +1,23 @@
+---
+- name: Prerquests for Jenkins Installation using ansible playbooks
+  hosts: all
+  tasks: 
+    - name: Installing Jenkins
+      command: "{{ item }}"
+      loop:
+        - amazon-linux-extras install epel -y
+        - amazon-linux-extras install java-openjdk11 -y
+        - wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        - rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+    - name: Install jenkins
+      yum:
+        name: jenkins
+        state: present
+    - name: Enable and Restart Jenkins
+      systemd:
+        name: jenkins
+        enabled: yes
+    - name: Restart jenkins
+      service:
+        name: jenkins
+        state: restarted

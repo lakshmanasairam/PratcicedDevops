@@ -1,0 +1,14 @@
+---
+- name: Installing wordpress and Apache
+  hosts: all
+  vars_files:
+    - myapp1-vars.yml
+  roles:
+    - db2
+
+- name: Installing Wordpress application
+  hosts: all
+  vars_files:
+    - myapp1-vars.yml
+  roles:
+    - app

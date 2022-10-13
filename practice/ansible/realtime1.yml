@@ -1,0 +1,8 @@
+---
+- name: uninstalling an appache
+  hosts: all
+  tasks:
+    - name: uninstalling an appache in server1
+      yum:
+        state:  absent
+        name: httpd

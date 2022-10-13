@@ -1,0 +1,23 @@
+- name: Installing a Db server
+  yum:
+    state: latest
+    name: mariadb-server,MySQL-python
+- name: Enabling a DB server
+  systemd:
+    enabled: yes
+    name: mariadb
+- name: restarting an server
+  systemd:
+    state: restarted
+    name: mariadb
+- name: create a user  in mariadb
+  mysql_user:
+    name: "{{ DB_USER  }}" 
+    password: "{{ DB_PASSWORD  }}"
+    host: '%'
+    priv: '*.*:ALL'
+    state: present
+- name: Create a database in mysql
+  mysql_db:
+    name: " {{ DB_NAME }}"
+    state: present

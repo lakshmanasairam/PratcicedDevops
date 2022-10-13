@@ -1,0 +1,23 @@
+---
+- name: working with playbooks
+  hosts: all
+  tasks:
+    - name: copying hosts file 
+      copy:
+        src: /etc/hosts
+        dest: /etc/hosts
+        owner: root
+        group: root
+        mode: '0644'
+    - name: creting a sample file
+      file:
+        path: /tmp/123.txt
+        state: touch
+        mode: '0777'
+
+    - name: executing python script
+      script: ./mycode.py
+      register: myoutput
+
+      #  - debug: msg="{{ myoutput.stdout_lines[1]}}"
+    - set_fact: myvalue="{{ myoutput.stdout_lines }}"

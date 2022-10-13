@@ -1,0 +1,12 @@
+---
+- name: Installing mariadb
+  hosts: all
+  var_files:
+    - myapp1-vars.yml
+  roles:
+    - db2
+
+- name:  Installing wordpress application
+  hosts: all
+  var_files:
+    - myapp1-vars.yml

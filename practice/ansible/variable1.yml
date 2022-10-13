@@ -1,0 +1,11 @@
+---
+#playscope Variables
+- name: printing playscope variables
+  hosts: all
+  vars:
+    - a: 100
+    - b: "devops"
+    - c: "Dvs_Technologies"
+  tasks:
+    - name: consuming variables
+      command: echo " var1 value is {{ a  }},subject is {{ b }}, trained by {{ c  }}"
